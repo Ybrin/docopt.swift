@@ -54,7 +54,7 @@ internal class LeafPattern : Pattern {
         self.name = name
         if let val = value
         {
-            self.value = val as AnyObject
+            self.value = val as! AnyObject
         }
     }
     

@@ -39,13 +39,13 @@ internal class Pattern: Equatable, Hashable, CustomStringConvertible {
                         let e = child as! LeafPattern
                         if ((e is Argument) && !(e is Command)) || ((e is Option) && (e as! Option).argCount != 0) {
                             if e.value == nil {
-                                e.value = [String]() as AnyObject
+                                e.value = [String]() as! AnyObject
                             } else if !(e.value is [String]) {
-                                e.value = String(describing:e.value!).split() as AnyObject
+                                e.value = String(describing:e.value!).split() as! AnyObject
                             }
                         }
                         if (e is Command) || ((e is Option) && (e as! Option).argCount == 0) {
-                            e.value = 0 as AnyObject
+                            e.value = 0 as! AnyObject
                             e.valueType = .int
                         }
                     }

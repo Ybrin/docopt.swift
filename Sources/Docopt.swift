@@ -141,7 +141,7 @@ open class Docopt {
             o = Option(nil, long: long, argCount: argCount)
             options.append(o)
             if tokens.error is DocoptExit {
-                o = Option(nil, long: long, argCount: argCount, value: (argCount > 0) ? value as AnyObject : true as AnyObject)
+                o = Option(nil, long: long, argCount: argCount, value: (argCount > 0) ? value as! AnyObject : true as! AnyObject)
             }
         } else {
             o = Option(similar[0])
@@ -159,7 +159,7 @@ open class Docopt {
                 }
             }
             if tokens.error is DocoptExit {
-                o.value = value as AnyObject? ?? true as AnyObject
+                o.value = value as! AnyObject? ?? true as! AnyObject
             }
         }
         return [o]
@@ -183,7 +183,7 @@ open class Docopt {
                 o = Option(short)
                 options.append(o)
                 if tokens.error is DocoptExit {
-                    o = Option(short, value: true as AnyObject)
+                    o = Option(short, value: true as! AnyObject)
                 }
             } else {
                 var value: String? = nil
@@ -199,10 +199,10 @@ open class Docopt {
                     left = ""
                 }
                 if tokens.error is DocoptExit {
-                    o.value = true as AnyObject
+                    o.value = true as! AnyObject
                     if let val = value
                     {
-                        o.value = val as AnyObject
+                        o.value = val as! AnyObject
                     }
                 }
             }
@@ -288,7 +288,7 @@ open class Docopt {
         while let current = tokens.current() {
             if tokens.current() == "--" {
                 while let token = tokens.move() {
-                    parsed.append(Argument(nil, value: token as AnyObject))
+                    parsed.append(Argument(nil, value: token as! AnyObject))
                 }
                 return parsed
             } else if current.hasPrefix("--") {
@@ -301,11 +301,11 @@ open class Docopt {
                 }
             } else if optionsFirst {
                 while let token = tokens.move() {
-                    parsed.append(Argument(nil, value: token as AnyObject))
+                    parsed.append(Argument(nil, value: token as! AnyObject))
                 }
                 return parsed
             } else {
-                parsed.append(Command(nil, value: tokens.move() as AnyObject))
+                parsed.append(Command(nil, value: tokens.move() as! AnyObject))
             }
         }
         return parsed

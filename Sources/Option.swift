@@ -72,7 +72,7 @@ internal class Option: LeafPattern {
             let matched = description.findAll("\\[default: (.*)\\]", flags: .caseInsensitive)
             if matched.count > 0
             {
-                value =  matched[0] as AnyObject
+                value =  matched[0] as! AnyObject
             }
             else
             {
