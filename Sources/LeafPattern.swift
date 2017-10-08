@@ -85,11 +85,11 @@ internal class LeafPattern : Pattern {
         }) as! [LeafPattern]
         
         if (valueType == .int) || (valueType == .list) {
-            var increment: Any? = 1 as NSNumber
+            var increment: Any? = 1
             if valueType != .int {
                 increment = match.value
                 if let val = match.value as? String {
-                    increment = [val] as NSArray
+                    increment = [val]
                 }
             }
             if sameName.isEmpty {
@@ -98,10 +98,10 @@ internal class LeafPattern : Pattern {
                 return (true, left_, collected + [match])
             }
             if let inc = increment as? Int {
-                sameName[0].value = (sameName[0].value as! Int + inc) as NSNumber
+                sameName[0].value = (sameName[0].value as! Int + inc)
                 sameName[0].valueType = .int
             } else if let inc = increment as? [String] {
-                sameName[0].value = (((sameName[0].value as? [String]) ?? [String]()) + inc) as NSArray
+                sameName[0].value = (((sameName[0].value as? [String]) ?? [String]()) + inc)
             }
             return (true, left_, collected)
         }
@@ -118,7 +118,7 @@ func ==(lhs: LeafPattern, rhs: LeafPattern) -> Bool {
         valEqual = lval == rval
     } else if let lval = lhs.value as? [String], let rval = rhs.value as? [String] {
         valEqual = lval == rval
-    } else if let lval = lhs.value as? NSNumber, let rval = rhs.value as? NSNumber {
+    } else if let lval = lhs.value as? Int, let rval = rhs.value as? Int {
         valEqual = lval == rval
     } else {
         // TODO: #wtf?

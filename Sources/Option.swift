@@ -52,7 +52,7 @@ internal class Option: LeafPattern {
         var short: String? = nil
         var long: String? = nil
         var argCount: UInt = 0
-        var value: Any? = kCFBooleanFalse
+        var value: Any? = false
         
         var (options, _, description) = optionDescription.strip().partition("  ")
         options = options.replacingOccurrences(of: ",", with: " ", options: [], range: nil)

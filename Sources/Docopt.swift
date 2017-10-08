@@ -13,8 +13,7 @@ import Foundation
     import Darwin
 #endif
 
-@objc
-open class Docopt : NSObject {
+open class Docopt {
     fileprivate(set) open var result: [String: Any]!
     fileprivate let doc: String
     fileprivate let version: String?
@@ -45,7 +44,6 @@ open class Docopt : NSObject {
         }
 
         arguments = args.filter { $0 != "" }
-        super.init()
         result = parse(optionsFirst)
     }
 

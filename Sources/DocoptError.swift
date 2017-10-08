@@ -25,10 +25,8 @@ internal class DocoptError {
     func raise(_ message: String? = nil) {
         let msg = (message ?? self.message).strip()
         if (DocoptError.test) {
-            NSException(
-                name: NSExceptionName.internalInconsistencyException,
-                reason: msg,
-                userInfo: nil).raise()
+            print("NSExceptionName.internalInconsistencyException: \(msg)")
+            exit(1)
         } else {
             print(msg)
             exit(0)
