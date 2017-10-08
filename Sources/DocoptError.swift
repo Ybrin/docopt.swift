@@ -7,7 +7,11 @@
 //
 
 import Foundation
-import Darwin
+#if os(Linux)
+    import Glibc
+#else
+    import Darwin
+#endif
 
 internal class DocoptError {
     var message: String
@@ -17,7 +21,7 @@ internal class DocoptError {
         self.message = message
         self.name = name
     }
-    
+
     func raise(_ message: String? = nil) {
         let msg = (message ?? self.message).strip()
         if (DocoptError.test) {
