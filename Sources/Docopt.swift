@@ -15,14 +15,14 @@ import Foundation
 
 @objc
 open class Docopt : NSObject {
-    fileprivate(set) open var result: [String: AnyObject]!
+    fileprivate(set) open var result: [String: Any]!
     fileprivate let doc: String
     fileprivate let version: String?
     fileprivate let help: Bool
     fileprivate let optionsFirst: Bool
     fileprivate let arguments: [String]
 
-    open static func parse(_ doc: String, argv: [String], help: Bool = false, version: String? = nil, optionsFirst: Bool = false) -> [String: AnyObject] {
+    open static func parse(_ doc: String, argv: [String], help: Bool = false, version: String? = nil, optionsFirst: Bool = false) -> [String: Any] {
         return Docopt(doc, argv: argv, help: help, version: version, optionsFirst: optionsFirst).result
     }
 
@@ -49,7 +49,7 @@ open class Docopt : NSObject {
         result = parse(optionsFirst)
     }
 
-    fileprivate func parse(_ optionsFirst: Bool) -> [String: AnyObject] {
+    fileprivate func parse(_ optionsFirst: Bool) -> [String: Any] {
         let usageSections = Docopt.parseSection("usage:", source: doc)
 
         if usageSections.count == 0 {
@@ -74,7 +74,7 @@ open class Docopt : NSObject {
 
         let (matched, left, collected) = pattern.fix().match(argv)
 
-        var result = [String: AnyObject]()
+        var result = [String: Any]()
 
         if matched && left.isEmpty {
             let collectedLeafs = collected as! [LeafPattern]
@@ -148,7 +148,7 @@ open class Docopt : NSObject {
             o = Option(nil, long: long, argCount: argCount)
             options.append(o)
             if tokens.error is DocoptExit {
-                o = Option(nil, long: long, argCount: argCount, value: (argCount > 0) ? value as AnyObject : true as AnyObject)
+                o = Option(nil, long: long, argCount: argCount, value: (argCount > 0) ? value as Any : true as Any)
             }
         } else {
             o = Option(similar[0])
@@ -166,7 +166,7 @@ open class Docopt : NSObject {
                 }
             }
             if tokens.error is DocoptExit {
-                o.value = value as AnyObject? ?? true as AnyObject
+                o.value = value as Any? ?? true as Any
             }
         }
         return [o]
@@ -190,7 +190,7 @@ open class Docopt : NSObject {
                 o = Option(short)
                 options.append(o)
                 if tokens.error is DocoptExit {
-                    o = Option(short, value: true as AnyObject)
+                    o = Option(short, value: true as Any)
                 }
             } else {
                 var value: String? = nil
@@ -206,10 +206,10 @@ open class Docopt : NSObject {
                     left = ""
                 }
                 if tokens.error is DocoptExit {
-                    o.value = true as AnyObject
+                    o.value = true as Any
                     if let val = value
                     {
-                        o.value = val as AnyObject
+                        o.value = val as Any
                     }
                 }
             }
@@ -295,7 +295,7 @@ open class Docopt : NSObject {
         while let current = tokens.current() {
             if tokens.current() == "--" {
                 while let token = tokens.move() {
-                    parsed.append(Argument(nil, value: token as AnyObject))
+                    parsed.append(Argument(nil, value: token as Any))
                 }
                 return parsed
             } else if current.hasPrefix("--") {
@@ -308,11 +308,11 @@ open class Docopt : NSObject {
                 }
             } else if optionsFirst {
                 while let token = tokens.move() {
-                    parsed.append(Argument(nil, value: token as AnyObject))
+                    parsed.append(Argument(nil, value: token as Any))
                 }
                 return parsed
             } else {
-                parsed.append(Command(nil, value: tokens.move() as AnyObject))
+                parsed.append(Command(nil, value: tokens.move() as Any))
             }
         }
         return parsed

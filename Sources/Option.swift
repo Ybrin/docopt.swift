@@ -21,7 +21,7 @@ internal class Option: LeafPattern {
     }
     override var description: String {
         get {
-            var valueDescription : String = value?.description ?? "nil"
+            var valueDescription: String = (value as? CustomStringConvertible)?.description ?? "nil"
             if value is Bool, let val = value as? Bool
             {
                 valueDescription = val ? "true" : "false"
@@ -34,7 +34,7 @@ internal class Option: LeafPattern {
         self.init(option.short, long: option.long, argCount: option.argCount, value: option.value)
     }
     
-    init(_ short: String? = nil, long: String? = nil, argCount: UInt = 0, value: AnyObject? = false as NSNumber) {
+    init(_ short: String? = nil, long: String? = nil, argCount: UInt = 0, value: Any? = false as NSNumber) {
         assert(argCount <= 1)
         self.short = short
         self.long = long
@@ -52,7 +52,7 @@ internal class Option: LeafPattern {
         var short: String? = nil
         var long: String? = nil
         var argCount: UInt = 0
-        var value: AnyObject? = kCFBooleanFalse
+        var value: Any? = kCFBooleanFalse
         
         var (options, _, description) = optionDescription.strip().partition("  ")
         options = options.replacingOccurrences(of: ",", with: " ", options: [], range: nil)
@@ -72,7 +72,7 @@ internal class Option: LeafPattern {
             let matched = description.findAll("\\[default: (.*)\\]", flags: .caseInsensitive)
             if matched.count > 0
             {
-                value =  matched[0] as AnyObject
+                value =  matched[0] as Any
             }
             else
             {

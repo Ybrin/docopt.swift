@@ -18,7 +18,7 @@ internal class LeafPattern : Pattern {
     var name: String?
     var valueDescription: String = "Never been set!"
 
-    var value: AnyObject? {
+    var value: Any? {
         willSet {
             valueDescription = newValue.debugDescription
             switch newValue {
@@ -54,7 +54,7 @@ internal class LeafPattern : Pattern {
         self.name = name
         if let val = value
         {
-            self.value = val as AnyObject
+            self.value = val as Any
         }
     }
     
@@ -85,7 +85,7 @@ internal class LeafPattern : Pattern {
         }) as! [LeafPattern]
         
         if (valueType == .int) || (valueType == .list) {
-            var increment: AnyObject? = 1 as NSNumber
+            var increment: Any? = 1 as NSNumber
             if valueType != .int {
                 increment = match.value
                 if let val = match.value as? String {
@@ -121,7 +121,8 @@ func ==(lhs: LeafPattern, rhs: LeafPattern) -> Bool {
     } else if let lval = lhs.value as? NSNumber, let rval = rhs.value as? NSNumber {
         valEqual = lval == rval
     } else {
-        valEqual = lhs.value === rhs.value
+        // TODO: #wtf?
+        valEqual = lhs.value as? NSObject === rhs.value as? NSObject
     }
     return lhs.name == rhs.name && valEqual
 }
