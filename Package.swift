@@ -9,6 +9,5 @@ let package = Package(
     targets: [
         .target(name: "Docopt", path: "Sources"),
 	.testTarget(name: "DocoptTests", dependencies: ["Docopt"], path: "Tests"),
-    ],
-    swiftLanguageVersions: [3]
+    ]
 )

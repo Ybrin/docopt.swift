@@ -7,11 +7,6 @@
 //
 
 import Foundation
-#if os(Linux)
-    import Glibc
-#else
-    import Darwin
-#endif
 
 internal class DocoptError {
     var message: String

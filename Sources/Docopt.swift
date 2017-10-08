@@ -7,14 +7,8 @@
 //
 
 import Foundation
-#if os(Linux)
-    import Glibc
-#else
-    import Darwin
-#endif
 
-@objc
-open class Docopt : NSObject {
+open class Docopt {
     fileprivate(set) open var result: [String: AnyObject]!
     fileprivate let doc: String
     fileprivate let version: String?
@@ -45,7 +39,6 @@ open class Docopt : NSObject {
         }
 
         arguments = args.filter { $0 != "" }
-        super.init()
         result = parse(optionsFirst)
     }
 
